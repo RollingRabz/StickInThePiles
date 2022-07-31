@@ -1,9 +1,20 @@
-import random
-turn = 0
+import random#### นำเข้า random
+
 stick = int(input("How many sticks in the pile?  "))
 print("There are", stick, "sticks in the pile.")
 name = input("What is your name?  ")
-turn = "P"
+turn = "C"
+
+def bot_take(stick):
+    
+    if ((stick-1)%3 == 1):
+        bot = 1
+    elif ((stick-1)%3 == 2):
+        bot = 2
+    else:
+        bot = random.randint(1,2)
+    
+    return bot
 
 while stick>0:
     
@@ -30,12 +41,22 @@ while stick>0:
             print("No! you can't take less than 1 stick.")
 
     else:
-        bot = random.randint(1,2)
-        print("Bot take",bot)
+        bot = bot_take(stick)
+        
         if stick < bot:
-            print("There are not enough sticks for bot to take.")
+            bot = stick
+            stick = stick - bot
+            print("Bot take = ",bot)
+            turn = "P"
+            if stick == 0:
+                print("Bot pick the last stick in the pile.")
+                print("Bot Lose")
+                print("Congratulation",name+". You win!")
+            else:
+                print("There are",stick,"sticks in the pile.")           
         else:
             stick = stick - bot
+            print("Bot take = ",bot)
             turn = "P"
             if stick == 0:
                 print("Bot pick the last stick in the pile.")
